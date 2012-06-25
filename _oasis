@@ -15,6 +15,7 @@ Library ssl
   Path:       src
   Modules:    Ssl, Ssl_threads
   CSources:   ssl_stubs.c
+  Install:    true
   CCLib:      -lssl
   CCOpt:      -O3
 
