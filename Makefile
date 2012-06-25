@@ -1,31 +1,38 @@
-PROGNAME = ocaml-ssl
-DISTFILES = bootstrap CHANGES configure configure.ac COPYING Makefile README \
-            src/Makefile.in src/OCamlMakefile src/META.in src/*.ml src/*.mli src/*.c \
-            examples/configure* examples/Makefile*.in examples/OCamlMakefile examples/Makefile examples/*.ml \
-            doc/html
-VERSION := $(shell grep 'AC_INIT' configure.ac| sed -e 's/AC_INIT([^,]*,\[\([^,]*\)\],.*)/\1/')
+# OASIS_START
+# DO NOT EDIT (digest: bc1e05bfc8b39b664f29dae8dbd3ebbb)
 
-all byte opt install uninstall update:
-	$(MAKE) -C src $@
+SETUP = ocaml setup.ml
 
-doc:
-	mkdir -p doc/html
-	ocamldoc -html -stars -d doc/html $(wildcard src/*.mli)
+build: setup.data
+	$(SETUP) -build $(BUILDFLAGS)
 
-clean:
-	-$(MAKE) -C src clean
-	-$(MAKE) -C examples clean
+doc: setup.data build
+	$(SETUP) -doc $(DOCFLAGS)
 
-distclean: clean
-	rm -rf autom4te.cache config.log config.status
-	rm -rf doc
-	rm -f src/META src/Makefile
-	-$(MAKE) -C examples distclean
+test: setup.data build
+	$(SETUP) -test $(TESTFLAGS)
 
-dist: doc
-	mkdir $(PROGNAME)-$(VERSION)
-	cp -R -L --parents $(DISTFILES) $(PROGNAME)-$(VERSION)
-	tar zcvf $(PROGNAME)-$(VERSION).tar.gz $(PROGNAME)-$(VERSION)
-	rm -rf $(PROGNAME)-$(VERSION)
+all: 
+	$(SETUP) -all $(ALLFLAGS)
 
-.PHONY: all byte opt doc install uninstall update clean distclean dist
+install: setup.data
+	$(SETUP) -install $(INSTALLFLAGS)
+
+uninstall: setup.data
+	$(SETUP) -uninstall $(UNINSTALLFLAGS)
+
+reinstall: setup.data
+	$(SETUP) -reinstall $(REINSTALLFLAGS)
+
+clean: 
+	$(SETUP) -clean $(CLEANFLAGS)
+
+distclean: 
+	$(SETUP) -distclean $(DISTCLEANFLAGS)
+
+setup.data:
+	$(SETUP) -configure $(CONFIGUREFLAGS)
+
+.PHONY: build doc test all install uninstall reinstall clean distclean configure
+
+# OASIS_STOP

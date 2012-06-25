@@ -1,0 +1,24 @@
+OASISFormat: 0.3
+Name:        ssl
+Version:     0.4.6
+Synopsis:    OCaml bindings for the libssl
+Authors:     Samuel Mimram <samuel.mimram@ens-lyon.org>
+License:     LGPL-2.1
+Plugins:     DevFiles (0.3), META (0.3)
+BuildTools: ocamlbuild
+
+Library ssl
+  Path:       src
+  Modules:    Ssl, Ssl_threads
+  CSources:   ssl_stubs.c
+  CCOpt:      -O3
+
+Document "ssl-doc"
+  Title:                API reference for ssl
+  Type:                 ocamlbuild (0.3)
+  Install:              false
+  BuildTools+:          ocamldoc
+  XOCamlbuildPath:      src
+  XOCamlbuildLibraries: ssl
+
+  
