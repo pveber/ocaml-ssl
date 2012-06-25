@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: 833c1d1db5919a5d485a706f2c3ddd29)
+# DO NOT EDIT (digest: 8218453fb0d39e826906f9050efa017a)
 # Ignore VCS directories, you can use the same kind of rule outside 
 # OASIS_START/STOP if you want to exclude directories that contains 
 # useless stuff for the build process
@@ -17,5 +17,18 @@
 "src/ssl.cmxs": use_ssl
 <src/*.ml{,i}>: oasis_library_ssl_ccopt
 "src/ssl_stubs.c": oasis_library_ssl_ccopt
+<src/ssl.{cma,cmxa}>: oasis_library_ssl_cclib
+"src/libssl_stubs.lib": oasis_library_ssl_cclib
+"src/dllssl_stubs.dll": oasis_library_ssl_cclib
+"src/libssl_stubs.a": oasis_library_ssl_cclib
+"src/dllssl_stubs.so": oasis_library_ssl_cclib
 <src/ssl.{cma,cmxa}>: use_libssl_stubs
+# Executable stelnet
+<examples/stelnet.{native,byte}>: use_ssl
+<examples/stelnet.{native,byte}>: pkg_threads
+# Executable stalkd
+<examples/stalkd.{native,byte}>: use_ssl
+<examples/stalkd.{native,byte}>: pkg_threads
+<examples/*.ml{,i}>: use_ssl
+<examples/*.ml{,i}>: pkg_threads
 # OASIS_STOP

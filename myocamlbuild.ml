@@ -1,5 +1,5 @@
 (* OASIS_START *)
-(* DO NOT EDIT (digest: 276078d06310e7ddc6997682cc1d5b48) *)
+(* DO NOT EDIT (digest: 6b2b59ed5d66bf89785eeeae7d69c2d3) *)
 module OASISGettext = struct
 # 21 "/home/pveber/usr/ocamlbrew/ocaml-3.12.1/build/odb/install-oasis/oasis-0.3.0~rc3/src/oasis/OASISGettext.ml"
 
@@ -551,14 +551,18 @@ let package_default =
      flags =
        [
           (["oasis_library_ssl_ccopt"; "compile"],
-            [(OASISExpr.EBool true, S [A "-ccopt"; A "-O3"])])
+            [(OASISExpr.EBool true, S [A "-ccopt"; A "-O3"])]);
+          (["oasis_library_ssl_cclib"; "link"],
+            [(OASISExpr.EBool true, S [A "-cclib"; A "-lssl"])]);
+          (["oasis_library_ssl_cclib"; "ocamlmklib"; "c"],
+            [(OASISExpr.EBool true, S [A "-lssl"])])
        ];
-     includes = [];
+     includes = [("examples", ["src"])];
      }
   ;;
 
 let dispatch_default = MyOCamlbuildBase.dispatch_default package_default;;
 
-# 563 "myocamlbuild.ml"
+# 567 "myocamlbuild.ml"
 (* OASIS_STOP *)
 Ocamlbuild_plugin.dispatch dispatch_default;;

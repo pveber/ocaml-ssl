@@ -7,10 +7,15 @@ License:     LGPL-2.1
 Plugins:     DevFiles (0.3), META (0.3)
 BuildTools: ocamlbuild
 
+Flag examples
+  Description: Build examples
+  Default: false
+
 Library ssl
   Path:       src
   Modules:    Ssl, Ssl_threads
   CSources:   ssl_stubs.c
+  CCLib:      -lssl
   CCOpt:      -O3
 
 Document "ssl-doc"
@@ -21,4 +26,16 @@ Document "ssl-doc"
   XOCamlbuildPath:      src
   XOCamlbuildLibraries: ssl
 
-  
+Executable stalkd
+  Path:   examples
+  MainIs: stalkd.ml
+  Build$: flag(examples)
+  BuildDepends: ssl, threads
+  CompiledObject: best
+
+Executable stelnet
+  Path:   examples
+  MainIs: stelnet.ml
+  Build$: flag(examples)
+  BuildDepends: ssl, threads
+  CompiledObject: best
